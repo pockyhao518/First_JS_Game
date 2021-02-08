@@ -37,8 +37,8 @@ Making sure the merge system is working
 The size and number of the ball will be growing after the balls merge.
 And the ball will be eliminated if two biggest ball merge.
 
-## Day# 4
-## Working game.
+## Day 4
+### Working game.
 Making sure we can start, restart the game.
 Polishing CSS and styling.
 
