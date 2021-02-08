@@ -22,26 +22,23 @@ CSS, html, Javascript, canvas
 
 ## Implementation Timeline 
 
-## Day 1
-### preparing
-Learning canvas. Understanding how tetris and 2048 work.
+### Day 1: preparing
+* Learning canvas. 
+* Understanding how tetris and 2048 work.
 
-## Day 2
-### Building my game logic.
-Making sure the drop system is working.
-And giving user random number on the ball
+### Day 2: Building my game logic.
+* Making sure the drop system is working.
+* And giving user random number on the ball
 
-## Day 3
-### Building my game logic.
-Making sure the merge system is working
-The size and number of the ball will be growing after the balls merge.
-And the ball will be eliminated if two biggest ball merge.
+### Day 3: Building my game logic.
+* Making sure the merge system is working
+* The size and number of the ball will be growing after the balls merge.
+* And the ball will be eliminated if two biggest ball merge.
 
-## Day 4
-### Working game.
-Making sure we can start, restart the game.
-Polishing CSS and styling.
+### Day 4: Working game.
+* Making sure we can start, restart the game.
+* Polishing CSS and styling.
 
 ## Bouns
 ### physics engineering.
-Adding a physics engine to the ball.
+* Adding a physics engine to the ball.
