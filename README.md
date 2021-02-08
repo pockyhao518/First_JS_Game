@@ -23,7 +23,7 @@ CSS, html, Javascript, canvas
 ## Implementation Timeline 
 
 ### Day 1: preparing
-* Learning canvas. 
+* Reviewing canvas. 
 * Reviewing the flappy Bird and asteroids. 
 * Understanding how tetris and 2048 work.
 
