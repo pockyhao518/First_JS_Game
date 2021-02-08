@@ -1,15 +1,16 @@
-# First_JS_Game
+# Tetris2048
 
 ## Background and Overview 
 
-I don't have the game name yet. But I want to create a game combine the Tetris and 2048. There will be cube drop down from top of browser, and user have to merge them together to eliminate the cube to save space. When user merge two cube, the cube will become bigger and bigger until eliminate.
+Welcome to Tetris2048. This is a game combine the Tetris and 2048. There will be balls drop down from top of browser, and user have to merge them together to eliminate the ball to save space. When user merge two ball, the ball will become bigger and bigger until eliminate.
 
 ## Functionality and MVPs 
 
-1. User will be able to drop the cube from top of the browser
-1. User will be able to merge two cube 
-1. User will be able to eliminate the biggest cube when two biggest cube merge
-1. User will be lose if the cube reach limit line
+1. User will be able to drop the ball from top of the browser
+1. User will be able to merge two ball on same number 
+1. User will be able to eliminate the biggest ball when two biggest ball merge
+1. User will be lose if the ball reach limit line
+1. User will get points which the number on the ball when user merge balls
 
 ## Wireframes 
 
@@ -17,18 +18,30 @@ I don't have the game name yet. But I want to create a game combine the Tetris a
 
 ## Architecture and Technology 
 
-CSS, Javascript, canvas
+CSS, html, Javascript, canvas
 
 ## Implementation Timeline 
 
 Day 1
-Making everything set up
+## preparing
+Learning canvas. Understanding how tetris and 2048 work.
 
 Day 2
-Making click drop working
+## Building my game logic.
+Making sure the drop system is working.
+And giving user random number on the ball
 
 Day 3
-Making merge working
+## Building my game logic.
+Making sure the merge system is working
+The size and number of the ball will be growing after the balls merge.
+And the ball will be eliminated if two biggest ball merge.
 
 Day 4
-Start, Finish, Eliminate 
+## Working game.
+Making sure we can start, restart the game.
+Polishing CSS and styling.
+
+Bouns
+## physics engineering.
+Adding a physics engine to the ball.
