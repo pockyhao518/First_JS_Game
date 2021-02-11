@@ -62,7 +62,7 @@ export default class Tetris2048{
                 let dist = this.distance(ob1, ob2)
                 let dx = ob2.x - ob1.x;
                 let dy = ob2.y - ob1.y;
-                if (dist < (ob1.r + ob2.r+10)) {
+                if (dist <= ob1.r + ob2.r + 5 && dist > ob1.r +5 && dist > ob2.r + 5) {
                     if(this.check(ob1,ob2)){
                         if(ob1.color === 'black'){
                             this.moveObject.splice(j, 1)
@@ -78,8 +78,14 @@ export default class Tetris2048{
                             newBall.x = midX;
                             newBall.y = midY;
                             newBall.idx = ob2.idx+1;
-                            newBall.vx = ob2.vx;
-                            newBall.vy = ob2.vy;
+                            if(ob1.speed()>ob2.speed()){
+                                newBall.vx = ob1.vx;
+                                newBall.vy = ob1.vy;
+                            }else{
+                                newBall.vx = ob2.vx;
+                                newBall.vy = ob2.vy;
+                            }
+                            
                             this.moveObject.splice(j,1)
                             this.moveObject.splice(i,1,newBall);
                             this.balls.splice(j,1)
@@ -235,6 +241,12 @@ export default class Tetris2048{
         this.ctxside.fillStyle = 'black'
         this.ctxside.fillText('Score', 5, 140, 100);
         this.ctxside.fillText(this.score, 5, 170, 100);
+        this.ctxside.closePath();
+
+        this.ctxside.beginPath();
+        this.ctxside.font = '20px serif'
+        this.ctxside.fillStyle = 'black'
+        this.ctxside.fillText('How To Play', 0, 200, 100);
         this.ctxside.closePath();
         if(this.running){
             requestAnimationFrame(this.animate.bind(this))

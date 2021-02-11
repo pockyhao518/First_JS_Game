@@ -1,15 +1,15 @@
-# Tetris2048
+# Merge Hero
 
 ## Background and Overview 
 
-Welcome to Tetris2048. This is a game combine the Tetris and 2048. There will be balls drop down from top of browser, and user have to merge them together to eliminate the ball to save space. When user merge two ball, the ball will become smaller and smaller until eliminate.
+Welcome to Merge Hero. This is a game combine the Tetris and 2048. There will be balls drop down from top of browser, and user have to merge them together to eliminate the ball to save space. When user merge two ball, the ball will become smaller and smaller until eliminate.
 
 ## Functionality and MVPs 
 
 1. User will be able to drop the ball from top of the browser
 1. User will be able to merge two ball on same number 
-1. User will be able to eliminate the smallest ball when two smallest ball merge
-1. User will be lose if the ball reach limit line
+1. User will be able to eliminate the biggest ball when two biggest ball merge
+1. User will be lose if no more balls left
 1. User will get points when user merge the ball
 
 ## Wireframes 
