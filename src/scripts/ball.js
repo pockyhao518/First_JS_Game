@@ -1,88 +1,97 @@
-const CONSTANTS = {
-    GRAVITY: 0.4,
-    TERMINAL_VEL: 10,
-    BOUNCE: 0.7,
-    FR: 0.1,
-    VX:5,
-    VY:10
-}
 const radius = [[10,'red'], [20,'blue'], [30,'orange'], [40,'green'], [50,'black']]
+
 export default class Ball {
-    constructor(demensions,cx){
+    constructor(demensions){
         this.demensions = demensions;
-        
-        let set = radius[Math.floor(Math.random()*radius.length)]
+        this.idx = Math.floor(Math.random()*(radius.length-2))
+        let set = radius[this.idx]
         this.r = set[0]
         this.color = set[1]
-        if(cx > this.r && (cx + this.r) <= demensions.width){
+        this.y = 60;
+        this.vx = 0;;
+        this.vy = 10;
+    }
+    merge(idx){
+        let set = radius[idx + 1]
+        this.r = set[0];
+        this.color = set[1];
+    }
+    set(num){
+        let cx = num;
+        if(cx > this.r && (cx + this.r) <= this.demensions.width){
             this.x = (cx - (cx % this.r));
         }else if(cx < this.r){
             this.x = Math.ceil(cx/this.r)*this.r
-        }else if ((cx+this.r )> demensions.width){
-            this.x = demensions.width - this.r
+        }else if ((cx+this.r )> this.demensions.width){
+            this.x = this.demensions.width - this.r
         }
-        
-        this.y = 30;
-
     }
 
+    angle() {
+        return Math.atan2(this.vy, this.vx);
+    };
+
+    speed(){
+        return Math.sqrt(this.vx**2 + this.vy**2)
+    }
     // fall(){
     //     if (this.y <= this.demensions.height){
     //         this.y += CONSTANTS.TERMINAL_VEL;
     //     }
     // }
 
-    animate(ctx){
-        // if (this.y + this.r < this.demensions.height){
-            ctx.clearRect(0,0,this.demensions.width, this.demensions.height);
-            // this.fall()
-            this.ballmove() 
-            this.drawBall(ctx)
-        // }
+    // animate(ctx){
+    //     // if (this.y + this.r < this.demensions.height){
+    //         // ctx.clearRect(0,0,this.demensions.width, this.demensions.height);
+    //         // this.fall()
+    //         this.ballmove() 
+    //         this.drawBall(ctx)
+    //     // }
         
-    }
+    // }
 
     drawBall(ctx){
-        ctx.fillStyle = this.color;
+        // let img = new Image();
+        // img.src = '/src/images/25231.png';
+        // let myPattern = ctx.createPattern(img, 'repeat');
         
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        // ctx.fillStyle = myPattern;
+        ctx.fillStyle = this.color;
         ctx.fill();
+        ctx.stroke();
         ctx.closePath();
+        
     }
 
-    ballmove() {
-        this.x += CONSTANTS.VX;
-        this.y += CONSTANTS.VY;
-        CONSTANTS.VY += CONSTANTS.GRAVITY;
+    // ballmove() {
+    //     this.x += this.vx;
+    //     this.y += this.vy;
+    //     this.vy += CONSTANTS.GRAVITY;
 
-        //If either wall is hit, change direction on x axis
-        if (this.x + this.r > this.demensions.width || this.x - this.r < 0) {
-            CONSTANTS.VX *= -1;
-        }
+    //     if (this.x + this.r >= this.demensions.width-1) {
+    //         this.x = this.demensions.width - this.r;
+    //         this.vx *= -CONSTANTS.BOUNCE;
+    //     }else if(this.x - this.r <= 0.2 ){
+    //         this.x = this.r;
+    //         this.vx *= -CONSTANTS.BOUNCE;
+    //     }
+    //     if (this.y + this.r >= this.demensions.height) {
+    //         this.y = this.demensions.height - this.r;
+    //         this.vy *= -CONSTANTS.BOUNCE;
+    //         if (this.vy < 0 && this.vy > -2.0)
+    //             this.vy = 0;
+    //         if (Math.abs(this.vx) < 0.5)
+    //             this.vx = 0;
+    //         this.xF();
+    //     }
+    // }
 
-        // Ball hits the floor
-        if (this.y + this.r > this.demensions.height) {// ||
-
-            // Re-positioning on the base
-            this.y = this.demensions.height - this.r;
-            //bounce the ball
-            CONSTANTS.VY *= -CONSTANTS.BOUNCE;
-            //do this otherwise, ball never stops bouncing
-            if (CONSTANTS.VY < 0 && CONSTANTS.VY > -2.1)
-                CONSTANTS.VY = 0;
-            //do this otherwise ball never stops on xaxis
-            if (Math.abs(CONSTANTS.VX) < 1.1)
-                CONSTANTS.VX = 0;
-
-            this.xF();
-    }
-}
-
- xF() {
-    if (CONSTANTS.VX > 0)
-        CONSTANTS.VX = CONSTANTS.VX - CONSTANTS.FR;
-    if (CONSTANTS.VX < 0)
-        CONSTANTS.VX = CONSTANTS.VX + CONSTANTS.FR;
-}
+    // xF() {
+    //     if (this.vx > 0)
+    //         this.vx = this.vx - CONSTANTS.FR;
+    //     if (this.vx < 0)
+    //         this.vx = this.vx + CONSTANTS.FR;
+    // }
 }
