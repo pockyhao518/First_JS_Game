@@ -17,7 +17,7 @@ export default class Ball {
         this.color = set[1];
     }
     set(num){
-        let cx = num;
+        let cx = num - 380;
         if(cx > this.r && (cx + this.r) <= this.demensions.width){
             this.x = (cx - (cx % this.r));
         }else if(cx < this.r){

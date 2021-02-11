@@ -1,14 +1,19 @@
 import Ball from './ball'
 
 export default class Tetris2048{
-    constructor(canvas) {
+    constructor(canvas,side) {
         this.ctx = canvas.getContext("2d");
         this.dimensions = { width: canvas.width, height: canvas.height };
         this.cx = null;
         this.balls = [];
-        this.restart();
-        this.dropevents();
+        this.running = false;
         this.moveObject = [];
+        this.score = 0;
+        this.ctxside = side.getContext('2d');
+        this.dimensions2 = { width: side.width, height: side.height}
+        
+        this.dropevents();
+        this.restart();
     }
     
     play(){
@@ -19,10 +24,11 @@ export default class Tetris2048{
     restart(){
         this.running = false;
         this.score = 0;
+        this.balls = [];
         // this.box = new Box(this.dimensions)
         let ball = new Ball(this.dimensions)
         this.balls.push(ball)
-        // this.animate()
+        this.animate()
     }
 
     dropevents() {
@@ -56,13 +62,14 @@ export default class Tetris2048{
                 let dist = this.distance(ob1, ob2)
                 let dx = ob2.x - ob1.x;
                 let dy = ob2.y - ob1.y;
-                if (dist < (ob1.r + ob2.r)) {
+                if (dist < (ob1.r + ob2.r+10)) {
                     if(this.check(ob1,ob2)){
                         if(ob1.color === 'black'){
                             this.moveObject.splice(j, 1)
                             this.moveObject.splice(i, 1);
                             this.balls.splice(j, 1)
                             this.balls.splice(i, 1)
+                            this.score += 5
                         }else{
                             let midX = (ob1.x + ob2.x) / 2;
                             let midY = (ob1.y + ob2.y) / 2;
@@ -77,6 +84,7 @@ export default class Tetris2048{
                             this.moveObject.splice(i,1,newBall);
                             this.balls.splice(j,1)
                             this.balls.splice(i,1,newBall)
+                            this.score += ob2.r/10
                         }
                         
 
@@ -174,10 +182,13 @@ export default class Tetris2048{
     check(ob1,ob2){
         return ob1.color === ob2.color;
     }
-
+    gameOver(){
+        return this.balls.length > 6;
+    }
     animate(){
         // this.box.animate(this.ctx);
         this.ctx.clearRect(0, 0, this.dimensions.width, this.dimensions.height);
+        this.ctxside.clearRect(0, 0, this.dimensions.width, this.dimensions.height);
         // this.ball.animate(this.ctx); 
         this.ballmove();
         this.ballCollision();
@@ -186,16 +197,49 @@ export default class Tetris2048{
                 ball.drawBall(this.ctx)
             
         })
+
+        if(this.balls.length === 1){
+            this.ctx.clearRect(0, 0, this.dimensions.width, this.dimensions.height);
+        }
+
+        if (this.gameOver()) {
+            alert(this.score);
+            this.restart();
+        }
+        this.ctxside.beginPath();
+        this.ctxside.font = '20px serif'
+        this.ctxside.fillStyle = 'black'
+        this.ctxside.fillText('Next Ball', 5, 20, 100);
+        this.ctxside.closePath();
+
+        this.ctxside.beginPath();
+        this.ctxside.arc(40, 40, 10, 0, Math.PI * 2);
+        // ctx.fillStyle = myPattern;
+        this.ctxside.fillStyle = this.balls[this.balls.length - 1].color;
+        this.ctxside.fill();
+        this.ctxside.stroke();
+        this.ctxside.closePath();
         
-        
-        this.ctx.fillStyle=this.balls[this.balls.length - 1].color;
-        
-        this.ctx.fillRect(300, 10, 10, 10);
+        this.ctxside.beginPath();
+        this.ctxside.font = '20px serif'
+        this.ctxside.fillStyle = 'black'
+        this.ctxside.fillText('Ball Left', 5, 80, 100);
+        this.ctxside.fillText(6 - this.balls.length, 5, 110, 100);
+        this.ctxside.closePath();
         // if(this.gameOver()){
         //     alert(this.score);
         //     this.restart()
         // }
-        requestAnimationFrame(this.animate.bind(this))
+        this.ctxside.beginPath();
+        this.ctxside.font = '20px serif'
+        this.ctxside.fillStyle = 'black'
+        this.ctxside.fillText('Score', 5, 140, 100);
+        this.ctxside.fillText(this.score, 5, 170, 100);
+        this.ctxside.closePath();
+        if(this.running){
+            requestAnimationFrame(this.animate.bind(this))
+        }
+        
         // if (this.running){
         //     requestAnimationFrame(this.animate.bind(this))
         // }

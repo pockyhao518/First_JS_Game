@@ -14,7 +14,7 @@ Welcome to Tetris2048. This is a game combine the Tetris and 2048. There will be
 
 ## Wireframes 
 
-![alt text](https://github.com/pockyhao518/First_JS_Game/blob/main/src/images/Screen%20Shot%202021-02-08%20at%202.20.22%20AM.png)
+![alt text](https://github.com/pockyhao518/First_JS_Game/blob/main/src/images/Screen%20Shot%202021-02-08%20at%209.45.02%20AM.png)
 
 ## Architecture and Technology 
 
