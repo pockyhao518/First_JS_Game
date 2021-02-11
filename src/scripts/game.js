@@ -62,7 +62,7 @@ export default class Tetris2048{
                 let dist = this.distance(ob1, ob2)
                 let dx = ob2.x - ob1.x;
                 let dy = ob2.y - ob1.y;
-                if (dist <= ob1.r + ob2.r + 5 && dist > ob1.r +5 && dist > ob2.r + 5) {
+                if (dist < ob1.r + ob2.r ) {
                     if(this.check(ob1,ob2)){
                         if(ob1.color === 'black'){
                             this.moveObject.splice(j, 1)
@@ -100,8 +100,8 @@ export default class Tetris2048{
                     let theta1 = ob1.angle();
                     let theta2 = ob2.angle();
                     let beta = Math.atan2(ob2.y - ob1.y, ob2.x - ob1.x);
-                    let m1 = ob1.r**3;
-                    let m2 = ob2.r**3;
+                    let m1 = ob1.r/10;
+                    let m2 = ob2.r/10;
                     let v1 = ob1.speed();
                     let v2 = ob2.speed();
                     
@@ -148,9 +148,11 @@ export default class Tetris2048{
             obj.x + obj.r > this.dimensions.width) {
             obj.vx *= -0.8;
         }
-        if (obj.y - obj.r < 0 ||
-            obj.y + obj.r  > this.dimensions.height) {
+        if (obj.y + obj.r  > this.dimensions.height) {
             obj.vy *= -0.8;
+        }
+        if (obj.y - obj.r < 70){
+            obj.vy = Math.abs(obj.vy)
         }
         if (obj.y + obj.r > this.dimensions.height) {
             obj.y = this.dimensions.height - obj.r;
@@ -189,7 +191,7 @@ export default class Tetris2048{
         return ob1.color === ob2.color;
     }
     gameOver(){
-        return this.balls.length > 6;
+        return this.balls.length > 50;
     }
     animate(){
         // this.box.animate(this.ctx);
