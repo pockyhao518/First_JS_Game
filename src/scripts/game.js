@@ -278,7 +278,7 @@ export default class Tetris2048{
         }
 
         if (this.gameOver()) {
-            alert("Congratulations, You got: " + this.score + 'pts');
+            alert("Congratulations, You got: " + this.score + " pts.");
             this.restart();
         }
         this.ctxside.beginPath();
