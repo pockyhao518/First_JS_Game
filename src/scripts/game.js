@@ -44,7 +44,6 @@ export default class Tetris2048{
         // this.cx = e.pageX;
         let ball = new Ball(this.dimensions)
         this.balls.push(ball)
-        console.log(this.rect.left)
         this.balls[this.balls.length - 2].set(e.pageX - this.rect.left);
         this.moveObject = this.balls.slice(0,this.balls.length - 1)
         if (!this.running) {
@@ -172,7 +171,10 @@ export default class Tetris2048{
                 }
                 
             }
-            this.wall(this.moveObject[i]);
+            if(this.balls.length > 1){
+                this.wall(this.moveObject[i]);
+            }
+            
         }
 
         if (this.moveObject.length > 0)

@@ -4,6 +4,7 @@ export default class Ball {
     constructor(demensions){
         this.demensions = demensions;
         this.idx = Math.floor(Math.random()*(radius.length-2)) + 2
+        // this.idx = 0
         let set = radius[this.idx]
         this.r = set[0]
         this.color = set[1]
