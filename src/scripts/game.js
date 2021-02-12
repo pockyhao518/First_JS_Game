@@ -64,7 +64,8 @@ export default class Tetris2048{
                 let dist = this.distance(ob1, ob2)
                 let dx = ob2.x - ob1.x;
                 let dy = ob2.y - ob1.y;
-                if (dist < ob1.r + ob2.r - 2) {
+            
+                if (dist <= ob1.r + ob2.r) {
                     // if(this.check(ob1,ob2)){
                     //     if(ob1.color === 'red'){
                     //         this.moveObject.splice(j, 1)
@@ -102,8 +103,8 @@ export default class Tetris2048{
                     let theta1 = ob1.angle();
                     let theta2 = ob2.angle();
                     let beta = Math.atan2(ob2.y - ob1.y, ob2.x - ob1.x);
-                    let m1 = ob1.r/10;
-                    let m2 = ob2.r/10;
+                    let m1 = ob1.r/5;
+                    let m2 = ob2.r/5;
                     let v1 = ob1.speed();
                     let v2 = ob2.speed();
                     
@@ -127,8 +128,8 @@ export default class Tetris2048{
                             newBall.x = midX;
                             newBall.y = midY;
                             newBall.idx = ob2.idx - 1;
-                            newBall.vy = this.dimensions.height/100;
-                            newBall.vx = ob1.vx - ob2.vx
+                            newBall.vy = (this.dimensions.height/100)/2
+                            // newBall.vx = (ob1.vx - ob2.vx)/5
                             // if (ob1.speed() > ob2.speed()) {
                             //     newBall.vx = ob1.vx * 0.9;
                             //     newBall.vy = ob1.vy * 0.9;
@@ -165,7 +166,7 @@ export default class Tetris2048{
                     // ob1.vy -= dvy;
                     // ob2.vx += dvx;
                     // ob2.vy += dvy;
-
+                    this.countAttack(ob1,ob2)
                     }
                     
                 }
@@ -178,13 +179,30 @@ export default class Tetris2048{
             this.wall(this.moveObject[this.moveObject.length - 1])
     }
 
+    countAttack(ob1, ob2, emergency = false) {
+        let overlap = ob1.r + ob2.r - this.distance(ob1, ob2);
+        let smallerObject = ob1.r < ob2.r ? ob1 : ob2;
+        let biggerObject = ob1.r > ob2.r ? ob1 : ob2;
+
+        if (emergency) {
+            [smallerObject, biggerObject] = [biggerObject, smallerObject]
+        }
+        let theta = Math.atan2((biggerObject.y - smallerObject.y), (biggerObject.x - smallerObject.x));
+        smallerObject.x -= overlap * Math.cos(theta);
+        smallerObject.y -= overlap * Math.sin(theta);
+
+        if (this.distance(ob1, ob2) < ob1.r + ob2.r) {
+            if (!emergency) this.countAttack(ob1, ob2, true)
+        }
+    }
+
     wall(obj){
         if (obj.x - obj.r  < 0 ||
             obj.x + obj.r > this.dimensions.width) {
-            obj.vx *= -0.8;
+            obj.vx *= -0.9;
         }
         if (obj.y + obj.r  > this.dimensions.height) {
-            obj.vy *= -0.8;
+            obj.vy *= -0.9;
         }
         if (obj.y - obj.r < 100){
             obj.vy = Math.abs(obj.vy)
@@ -237,6 +255,7 @@ export default class Tetris2048{
 
     check(ob1,ob2){
         return ob1.color === ob2.color;
+        // return false;
     }
     gameOver(){
         return this.balls.length > 6;
@@ -259,7 +278,7 @@ export default class Tetris2048{
         }
 
         if (this.gameOver()) {
-            alert(this.score);
+            alert("Congratulations, You got: " + this.score);
             this.restart();
         }
         this.ctxside.beginPath();
