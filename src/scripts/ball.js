@@ -1,23 +1,23 @@
-const radius = [[10,'red'], [20,'blue'], [30,'orange'], [40,'green'], [50,'black']]
+const radius = [[10, 'rgb(100,100,105)'], [20, 'rgb(255,255,255)'], [30, 'rgb(210,221,187)'], [40, 'rgb(209,211,211)'], [50,'rgb(241,194,178)']]
 
 export default class Ball {
     constructor(demensions){
         this.demensions = demensions;
-        this.idx = Math.floor(Math.random()*(radius.length-2))
+        this.idx = Math.floor(Math.random()*(radius.length-2)) + 2
         let set = radius[this.idx]
         this.r = set[0]
         this.color = set[1]
-        this.y = 60;
+        this.y = 0;
         this.vx = 0;;
-        this.vy = 10;
+        this.vy = 8;
     }
     merge(idx){
-        let set = radius[idx + 1]
+        let set = radius[idx - 1]
         this.r = set[0];
         this.color = set[1];
     }
     set(num){
-        let cx = num - 380;
+        let cx = num;
         if(cx > this.r && (cx + this.r) <= this.demensions.width){
             this.x = (cx - (cx % this.r));
         }else if(cx < this.r){
@@ -60,7 +60,7 @@ export default class Ball {
         // ctx.fillStyle = myPattern;
         ctx.fillStyle = this.color;
         ctx.fill();
-        ctx.stroke();
+        // ctx.stroke();
         ctx.closePath();
         
     }

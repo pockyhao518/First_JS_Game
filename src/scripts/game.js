@@ -3,6 +3,7 @@ import Ball from './ball'
 export default class Tetris2048{
     constructor(canvas,side) {
         this.ctx = canvas.getContext("2d");
+        this.rect = canvas.getBoundingClientRect(); 
         this.dimensions = { width: canvas.width, height: canvas.height };
         this.cx = null;
         this.balls = [];
@@ -43,7 +44,8 @@ export default class Tetris2048{
         // this.cx = e.pageX;
         let ball = new Ball(this.dimensions)
         this.balls.push(ball)
-        this.balls[this.balls.length-2].set(e.pageX);
+        console.log(this.rect.left)
+        this.balls[this.balls.length - 2].set(e.pageX - this.rect.left);
         this.moveObject = this.balls.slice(0,this.balls.length - 1)
         if (!this.running) {
             this.play();
@@ -62,39 +64,39 @@ export default class Tetris2048{
                 let dist = this.distance(ob1, ob2)
                 let dx = ob2.x - ob1.x;
                 let dy = ob2.y - ob1.y;
-                if (dist < ob1.r + ob2.r ) {
-                    if(this.check(ob1,ob2)){
-                        if(ob1.color === 'black'){
-                            this.moveObject.splice(j, 1)
-                            this.moveObject.splice(i, 1);
-                            this.balls.splice(j, 1)
-                            this.balls.splice(i, 1)
-                            this.score += 5
-                        }else{
-                            let midX = (ob1.x + ob2.x) / 2;
-                            let midY = (ob1.y + ob2.y) / 2;
-                            let newBall = new Ball(this.dimensions);
-                            newBall.merge(ob2.idx);
-                            newBall.x = midX;
-                            newBall.y = midY;
-                            newBall.idx = ob2.idx+1;
-                            if(ob1.speed()>ob2.speed()){
-                                newBall.vx = ob1.vx;
-                                newBall.vy = ob1.vy;
-                            }else{
-                                newBall.vx = ob2.vx;
-                                newBall.vy = ob2.vy;
-                            }
+                if (dist < ob1.r + ob2.r - 2) {
+                    // if(this.check(ob1,ob2)){
+                    //     if(ob1.color === 'red'){
+                    //         this.moveObject.splice(j, 1)
+                    //         this.moveObject.splice(i, 1);
+                    //         this.balls.splice(j, 1)
+                    //         this.balls.splice(i, 1)
+                    //         this.score += 5
+                    //     }else{
+                    //         let midX = (ob1.x + ob2.x) / 2;
+                    //         let midY = (ob1.y + ob2.y) / 2;
+                    //         let newBall = new Ball(this.dimensions);
+                    //         newBall.merge(ob2.idx);
+                    //         newBall.x = midX;
+                    //         newBall.y = midY;
+                    //         newBall.idx = ob2.idx-1;
+                    //         if(ob1.speed() > ob2.speed()){
+                    //             newBall.vx = ob1.vx*0.9;
+                    //             newBall.vy = ob1.vy * 0.9;
+                    //         }else{
+                    //             newBall.vx = ob2.vx * 0.9;
+                    //             newBall.vy = ob2.vy * 0.9;
+                    //         }
                             
-                            this.moveObject.splice(j,1)
-                            this.moveObject.splice(i,1,newBall);
-                            this.balls.splice(j,1)
-                            this.balls.splice(i,1,newBall)
-                            this.score += ob2.r/10
-                        }
+                    //         this.moveObject.splice(j,1)
+                    //         this.moveObject.splice(i,1,newBall);
+                    //         this.balls.splice(j,1)
+                    //         this.balls.splice(i,1,newBall)
+                    //         this.score += 6 - ob2.r/10
+                    //     }
                         
 
-                    }else{
+                    // }else{
 
                     
                     let theta1 = ob1.angle();
@@ -110,6 +112,39 @@ export default class Tetris2048{
                     let dx2F = (v2 * Math.cos(theta2 - beta) * (m2 - m1) + 2 * m1 * v1 * Math.cos(theta1 - beta)) / (m1 + m2) * Math.cos(beta) + v2 * Math.sin(theta2 - beta) * Math.cos(beta + Math.PI / 2);
                     let dy2F = (v2 * Math.cos(theta2 - beta) * (m2 - m1) + 2 * m1 * v1 * Math.cos(theta1 - beta)) / (m1 + m2) * Math.sin(beta) + v2 * Math.sin(theta2 - beta) * Math.sin(beta + Math.PI / 2);
                    
+                    if (this.check(ob1, ob2)) {
+                        if (ob1.color === 'rgb(100,100,105)') {
+                            this.moveObject.splice(j, 1)
+                            this.moveObject.splice(i, 1);
+                            this.balls.splice(j, 1)
+                            this.balls.splice(i, 1)
+                            this.score += 5
+                        } else {
+                            let midX = (ob1.x + ob2.x) / 2;
+                            let midY = (ob1.y + ob2.y) / 2;
+                            let newBall = new Ball(this.dimensions);
+                            newBall.merge(ob2.idx);
+                            newBall.x = midX;
+                            newBall.y = midY;
+                            newBall.idx = ob2.idx - 1;
+                            newBall.vy = this.dimensions.height/100;
+                            newBall.vx = ob1.vx - ob2.vx
+                            // if (ob1.speed() > ob2.speed()) {
+                            //     newBall.vx = ob1.vx * 0.9;
+                            //     newBall.vy = ob1.vy * 0.9;
+                            // } else {
+                            //     newBall.vx = ob2.vx * 0.9;
+                            //     newBall.vy = ob2.vy * 0.9;
+                            // }
+                            this.moveObject.splice(j, 1)
+                            this.moveObject.splice(i, 1, newBall);
+                            this.balls.splice(j, 1)
+                            this.balls.splice(i, 1, newBall)
+                            this.score += 6 - ob2.r / 10
+                        }
+
+
+                    } else {
                     ob1.vx = dx1F;
                     ob1.vy = dy1F ;
                     ob2.vx = dx2F ;
@@ -151,7 +186,7 @@ export default class Tetris2048{
         if (obj.y + obj.r  > this.dimensions.height) {
             obj.vy *= -0.8;
         }
-        if (obj.y - obj.r < 70){
+        if (obj.y - obj.r < 100){
             obj.vy = Math.abs(obj.vy)
         }
         if (obj.y + obj.r > this.dimensions.height) {
@@ -171,40 +206,53 @@ export default class Tetris2048{
     ballmove() {
         this.moveObject.forEach(obj => {
         obj.x += obj.vx;
-        obj.y += obj.vy;
-        // this.xF(obj);
+        obj.y += obj.vy; 
+        //    this.xF(obj);
+        obj.drawBall(this.ctx)
+        
         })
        
     }
 
-    xF(obj) {
-        if (obj.vx > 0)
-            obj.vx -= 0.1;
-        if (obj.vx < 0)
-            obj.vx += 0.1;
-            if(Math.abs(obj.vx) < 0.5&&(obj.y + obj.r) >= this.dimensions.height){
-                obj.vx = 0;
-            }
-    }
+    // xF(obj) {
+    //     if (obj.vx > 0 && obj.y + obj.r >= this.dimensions.height){
+    //         obj.vx -= 0.1;
+    //     }
+            
+    //     if (obj.vx < 0 && obj.y + obj.r >= this.dimensions.height){
+    //         obj.vx += 0.1;
+    //     }
+            
+    //     if(Math.abs(obj.vx) < 0.5&&(obj.y + obj.r) >= this.dimensions.height){
+    //         obj.vx = 0;
+    //     }
+    //     if(obj.y + obj.r <this.dimensions.height){
+    //         obj.vy += 0.2;
+    //     }else{
+    //         obj.vy = 0;
+    //     }
+        
+
+    // }
 
     check(ob1,ob2){
         return ob1.color === ob2.color;
     }
     gameOver(){
-        return this.balls.length > 50;
+        return this.balls.length > 6;
     }
     animate(){
         // this.box.animate(this.ctx);
         this.ctx.clearRect(0, 0, this.dimensions.width, this.dimensions.height);
         this.ctxside.clearRect(0, 0, this.dimensions.width, this.dimensions.height);
         // this.ball.animate(this.ctx); 
-        this.ballmove();
-        this.ballCollision();
         // this.ballmove();
-        this.moveObject.forEach(ball=>{
-                ball.drawBall(this.ctx)
+        this.ballCollision();
+        this.ballmove();
+        // this.moveObject.forEach(ball=>{
+        //         ball.drawBall(this.ctx)
             
-        })
+        // })
 
         if(this.balls.length === 1){
             this.ctx.clearRect(0, 0, this.dimensions.width, this.dimensions.height);
@@ -215,9 +263,9 @@ export default class Tetris2048{
             this.restart();
         }
         this.ctxside.beginPath();
-        this.ctxside.font = '20px serif'
-        this.ctxside.fillStyle = 'black'
-        this.ctxside.fillText('Next Ball', 5, 20, 100);
+        this.ctxside.font = '20px PT Sans'
+        this.ctxside.fillStyle = '#97928A'
+        this.ctxside.fillText('Next Ball', 15, 20, 100);
         this.ctxside.closePath();
 
         this.ctxside.beginPath();
@@ -225,31 +273,40 @@ export default class Tetris2048{
         // ctx.fillStyle = myPattern;
         this.ctxside.fillStyle = this.balls[this.balls.length - 1].color;
         this.ctxside.fill();
-        this.ctxside.stroke();
+        // this.ctxside.stroke();
         this.ctxside.closePath();
         
         this.ctxside.beginPath();
-        this.ctxside.font = '20px serif'
-        this.ctxside.fillStyle = 'black'
-        this.ctxside.fillText('Ball Left', 5, 80, 100);
+        this.ctxside.font = '20px PT Sans'
+        this.ctxside.fillStyle = '#97928A'
+        this.ctxside.fillText('Ball Left', 15, 80, 100);
         this.ctxside.fillText(6 - this.balls.length, 5, 110, 100);
-        this.ctxside.closePath();
-        // if(this.gameOver()){
-        //     alert(this.score);
-        //     this.restart()
-        // }
-        this.ctxside.beginPath();
-        this.ctxside.font = '20px serif'
-        this.ctxside.fillStyle = 'black'
-        this.ctxside.fillText('Score', 5, 140, 100);
-        this.ctxside.fillText(this.score, 5, 170, 100);
+        // this.ctxside.closePath();
+        // // if(this.gameOver()){
+        // //     alert(this.score);
+        // //     this.restart()
+        // // }
+        // // this.ctxside.beginPath();
+        // this.ctxside.font = '20px PT Sans'
+        // this.ctxside.fillStyle = '#97928A'
+        this.ctxside.fillText('Score', 15, 140, 100);
+        this.ctxside.fillText(this.score, 15, 170, 100);
+        // this.ctxside.closePath();
+
+        // this.ctxside.beginPath();
+        // this.ctxside.font = '20px PT Sans'
+        // this.ctxside.fillStyle = '#97928A'
+        this.ctxside.fillText('How To Play', 10, 200, 100);
+        this.ctxside.fillText('Click to drop', 10, 250, 100);
+        this.ctxside.fillText('the ball,', 10, 280, 100);
+        this.ctxside.fillText('you can drop', 10, 310, 100);
+        this.ctxside.fillText('5 balls maximum.', 10, 340, 100);
+        this.ctxside.fillText('Same balls will', 10, 370, 100);
+        this.ctxside.fillText('merge and', 10, 400, 100);
+        this.ctxside.fillText('getting smaller.', 10, 430, 100);
         this.ctxside.closePath();
 
-        this.ctxside.beginPath();
-        this.ctxside.font = '20px serif'
-        this.ctxside.fillStyle = 'black'
-        this.ctxside.fillText('How To Play', 0, 200, 100);
-        this.ctxside.closePath();
+
         if(this.running){
             requestAnimationFrame(this.animate.bind(this))
         }
