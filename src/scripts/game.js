@@ -299,7 +299,7 @@ export default class Tetris2048{
         this.ctxside.font = '20px PT Sans'
         this.ctxside.fillStyle = '#97928A'
         this.ctxside.fillText('Ball Left', 15, 80, 100);
-        this.ctxside.fillText(6 - this.balls.length, 5, 110, 100);
+        this.ctxside.fillText(6 - this.balls.length, 15, 110, 100);
         // this.ctxside.closePath();
         // // if(this.gameOver()){
         // //     alert(this.score);
