@@ -48,7 +48,10 @@ table {
 }
 
 #gamescreen {
-	background-color: rgb(161,208,202);
+	background-image: url('../images/bang.jpg');
+	background-size:100%;
+	border: solid 1px white;
+	background-repeat: no-repeat;
 }
 #side{
 	border: solid 1px white;
@@ -59,4 +62,9 @@ body{
 	background-image: url('../images/bb.jpg');
 	background-repeat: no-repeat;
   	background-size: cover;
+}
+
+#div-foot {
+	text-align: center;
+    margin: 10px;
 }

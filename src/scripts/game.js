@@ -300,8 +300,8 @@ export default class Tetris2048{
         this.ctxside.beginPath();
         this.ctxside.font = '20px PT Sans'
         this.ctxside.fillStyle = '#97928A'
-        this.ctxside.fillText('Ball Left', 15, 80, 100);
-        this.ctxside.fillText(7 - this.balls.length, 15, 110, 100);
+        this.ctxside.fillText('Balls', 15, 80, 100);
+        this.ctxside.fillText(7 - this.balls.length+' / 6', 15, 110, 100);
         // this.ctxside.closePath();
         // // if(this.gameOver()){
         // //     alert(this.score);
@@ -310,21 +310,24 @@ export default class Tetris2048{
         // // this.ctxside.beginPath();
         // this.ctxside.font = '20px PT Sans'
         // this.ctxside.fillStyle = '#97928A'
-        this.ctxside.fillText('Score', 15, 140, 100);
+        this.ctxside.fillText('Scores', 15, 140, 100);
         this.ctxside.fillText(this.score, 15, 170, 100);
         // this.ctxside.closePath();
 
         // this.ctxside.beginPath();
         // this.ctxside.font = '20px PT Sans'
         // this.ctxside.fillStyle = '#97928A'
-        this.ctxside.fillText('How To Play', 10, 200, 100);
+        this.ctxside.fillText('How To Play', 10, 210, 100);
         this.ctxside.fillText('Click to drop', 10, 250, 100);
         this.ctxside.fillText('the ball,', 10, 280, 100);
         this.ctxside.fillText('you can drop', 10, 310, 100);
-        this.ctxside.fillText('5 balls maximum.', 10, 340, 100);
-        this.ctxside.fillText('Same balls will', 10, 370, 100);
-        this.ctxside.fillText('merge and', 10, 400, 100);
-        this.ctxside.fillText('getting smaller.', 10, 430, 100);
+        this.ctxside.fillText('up to 6 balls', 10, 340, 100);
+        this.ctxside.fillText('can be placed.', 10, 370, 100);
+        this.ctxside.fillText('Contact balls', 10, 400, 100);
+        this.ctxside.fillText('of the same', 10, 430, 100);
+        this.ctxside.fillText('size will merge', 10, 460, 100);
+        this.ctxside.fillText('and become', 10, 490, 100);
+        this.ctxside.fillText('smaller.', 10, 520, 100);
         this.ctxside.closePath();
 
 
