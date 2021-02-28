@@ -11,7 +11,7 @@
 
     <meta property="og:title" content="Rolling Rolling" />
     <meta property='og:image'
-        content='https://github.com/pockyhao518/First_JS_Game/blob/main/src/images/ball.gif?raw=true' />
+        content='https://raw.githubusercontent.com/pockyhao518/First_JS_Game/main/src/images/ball.gif' />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:description"
@@ -27,14 +27,43 @@
     </div>
     
     <script src="./dist/main.js"></script>
-    <div id="div-foot">
-        <p className="account-foot">About me</p>
-        <ul className='account-link'>
-            <li><a href="https://github.com/pockyhao518">Github</a></li>
-            <li><a href="https://www.linkedin.com/in/zihao-li-6281b913b/">LinkedIn</a></li>
-        </ul>
+    
+    <button id="myBtn">About me</button>
+        <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>About me</h2>
+            </div>
+            <div class="modal-body">
+                <ul className='account-link'>
+                    <li><a target="_blank" rel="noreferrer" href="https://github.com/pockyhao518">Github</a></li>
+                    <li><a target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/zihao-li-6281b913b/">LinkedIn</a></li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <h3>Thank you</h3>
+            </div>
+        </div>
+    
     </div>
     
+    <script>
+        let modal = document.getElementById("myModal");
+        let btn = document.getElementById("myBtn");
+        let span = document.getElementsByClassName("close")[0];
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 
 </html>
