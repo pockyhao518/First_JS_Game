@@ -127,7 +127,14 @@ export default class Tetris2048{
                             newBall.x = midX;
                             newBall.y = midY;
                             newBall.idx = ob2.idx - 1;
-                            newBall.vy = (this.dimensions.height/100)/2
+                            if(v1 > v2){
+                                newBall.vx = ob1.vx;
+                                newBall.vy = ob1.vy;
+                            }else{
+                                newBall.vx = ob2.vx;
+                                newBall.vy = ob2.vy;
+                            }
+                            // newBall.vy = (this.dimensions.height/100)/2
                             // newBall.vx = (ob1.vx - ob2.vx)/5
                             // if (ob1.speed() > ob2.speed()) {
                             //     newBall.vx = ob1.vx * 0.9;
@@ -206,7 +213,7 @@ export default class Tetris2048{
         if (obj.y + obj.r  > this.dimensions.height) {
             obj.vy *= -0.9;
         }
-        if (obj.y - obj.r < 100){
+        if (obj.y - obj.r < 0){
             obj.vy = Math.abs(obj.vy)
         }
         if (obj.y + obj.r > this.dimensions.height) {
@@ -285,7 +292,7 @@ export default class Tetris2048{
         }
         this.ctxside.beginPath();
         this.ctxside.font = '20px PT Sans'
-        this.ctxside.fillStyle = '#97928A'
+        this.ctxside.fillStyle = 'black'
         this.ctxside.fillText('Next Ball', 15, 20, 100);
         this.ctxside.closePath();
 
@@ -299,7 +306,7 @@ export default class Tetris2048{
         
         this.ctxside.beginPath();
         this.ctxside.font = '20px PT Sans'
-        this.ctxside.fillStyle = '#97928A'
+        this.ctxside.fillStyle = 'black'
         this.ctxside.fillText('Balls', 15, 80, 100);
         this.ctxside.fillText(7 - this.balls.length+' / 6', 15, 110, 100);
         // this.ctxside.closePath();
